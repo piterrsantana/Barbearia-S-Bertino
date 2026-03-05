@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Barbearia Sr. Bertino - Agendamento</title>
     <style>
-        /* Estilos para um visual limpo e profissional */
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f8f8f8; color: #222; margin: 0; padding: 15px; }
-        .container { max-width: 450px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #000; }
-        h1 { text-align: center; font-size: 22px; margin-bottom: 5px; text-transform: uppercase; }
-        p.subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; }
+        .container { max-width: 450px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #000; text-align: center; }
         
-        label { display: block; margin-top: 15px; font-weight: bold; font-size: 14px; }
+        /* Estilo da Imagem/Logo */
+        .logo-img { max-width: 200px; height: auto; margin-bottom: 15px; border-radius: 8px; }
+        
+        h1 { font-size: 22px; margin-bottom: 5px; text-transform: uppercase; }
+        p.subtitle { color: #666; font-size: 14px; margin-bottom: 25px; }
+        
+        label { display: block; margin-top: 15px; font-weight: bold; font-size: 14px; text-align: left; }
         input, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
         
-        /* Botão estilizado para o WhatsApp */
         .btn-whatsapp { background-color: #25d366; color: white; border: none; padding: 15px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
         .btn-whatsapp:hover { background-color: #128c7e; }
         
@@ -24,6 +26,8 @@
 <body>
 
 <div class="container">
+    <img src="image.png" alt="Logo Barbearia Sr. Bertino" class="logo-img">
+    
     <h1>Barbearia Sr. Bertino</h1>
     <p class="subtitle">Sistema de Agendamento Rápido</p>
 
@@ -58,29 +62,24 @@
 
 <script>
     function agendarWhatsApp() {
-        // Coleta os valores
         const nome = document.getElementById('nome').value;
         const servico = document.getElementById('servico').value;
         const dataRaw = document.getElementById('data').value;
         
-        // Validação simples
         if (nome.trim() === "" || dataRaw === "") {
             alert("Por favor, preencha o seu nome e escolha o horário.");
             return;
         }
 
-        // Formatação da data para ficar legível (DD/MM/AAAA às HH:MM)
         const dataObj = new Date(dataRaw);
         const dataFormatada = dataObj.toLocaleDateString('pt-BR') + " às " + dataObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
 
-        // Configuração do WhatsApp
-        const telefone = "5511995099062"; // Seu número configurado
+        const telefone = "5511995099062"; 
         const texto = `*Novo Agendamento - Barbearia Sr. Bertino*%0A%0A` +
                       `*Cliente:* ${nome}%0A` +
                       `*Serviço:* ${servico}%0A` +
                       `*Data/Hora:* ${dataFormatada}`;
 
-        // Redirecionamento
         const url = `https://wa.me/${telefone}?text=${texto}`;
         window.open(url, '_blank');
     }

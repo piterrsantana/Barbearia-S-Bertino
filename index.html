@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Sr. Bertino - Agendamento</title>
+    <style>
+        /* Estilos para um visual limpo e profissional */
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background-color: #f8f8f8; color: #222; margin: 0; padding: 15px; }
+        .container { max-width: 450px; margin: 20px auto; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #000; }
+        h1 { text-align: center; font-size: 22px; margin-bottom: 5px; text-transform: uppercase; }
+        p.subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 25px; }
+        
+        label { display: block; margin-top: 15px; font-weight: bold; font-size: 14px; }
+        input, select { width: 100%; padding: 12px; margin-top: 5px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
+        
+        /* Botão estilizado para o WhatsApp */
+        .btn-whatsapp { background-color: #25d366; color: white; border: none; padding: 15px; width: 100%; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.3s; }
+        .btn-whatsapp:hover { background-color: #128c7e; }
+        
+        optgroup { font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Barbearia Sr. Bertino</h1>
+    <p class="subtitle">Sistema de Agendamento Rápido</p>
+
+    <label for="nome">Nome do Cliente:</label>
+    <input type="text" id="nome" placeholder="Seu nome completo">
+
+    <label for="servico">Serviço ou Pacote:</label>
+    <select id="servico">
+        <optgroup label="Serviços Individuais">
+            <option value="Corte (R$ 30)">Corte - R$ 30</option>
+            <option value="Barba (R$ 30)">Barba - R$ 30</option>
+            <option value="Corte e Barba (R$ 60)">Corte e Barba - R$ 60</option>
+            <option value="Sobrancelha (R$ 10)">Sobrancelha - R$ 10</option>
+            <option value="Bigode (R$ 15)">Bigode - R$ 15</option>
+            <option value="Corte Tesoura (R$ 40)">Corte Tesoura - R$ 40</option>
+        </optgroup>
+        <optgroup label="Pacotes Mensais">
+            <option value="Pacote I (R$ 100)">Pacote I (4 cortes) - R$ 100</option>
+            <option value="Pacote Nível II (R$ 120)">Pacote Nível II (4 cortes + 2 barbas) - R$ 120</option>
+            <option value="Pacote Nível III (R$ 140)">Pacote Nível III (Completo Cabelo/Sobr/Big) - R$ 140</option>
+            <option value="Pacote Nível IV (R$ 160)">Pacote Nível IV (Completo Total) - R$ 160</option>
+        </optgroup>
+    </select>
+
+    <label for="data">Data e Horário:</label>
+    <input type="datetime-local" id="data">
+
+    <button class="btn-whatsapp" onclick="agendarWhatsApp()">
+        ✅ AGENDAR PELO WHATSAPP
+    </button>
+</div>
+
+<script>
+    function agendarWhatsApp() {
+        // Coleta os valores
+        const nome = document.getElementById('nome').value;
+        const servico = document.getElementById('servico').value;
+        const dataRaw = document.getElementById('data').value;
+        
+        // Validação simples
+        if (nome.trim() === "" || dataRaw === "") {
+            alert("Por favor, preencha o seu nome e escolha o horário.");
+            return;
+        }
+
+        // Formatação da data para ficar legível (DD/MM/AAAA às HH:MM)
+        const dataObj = new Date(dataRaw);
+        const dataFormatada = dataObj.toLocaleDateString('pt-BR') + " às " + dataObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+
+        // Configuração do WhatsApp
+        const telefone = "5511995099062"; // Seu número configurado
+        const texto = `*Novo Agendamento - Barbearia Sr. Bertino*%0A%0A` +
+                      `*Cliente:* ${nome}%0A` +
+                      `*Serviço:* ${servico}%0A` +
+                      `*Data/Hora:* ${dataFormatada}`;
+
+        // Redirecionamento
+        const url = `https://wa.me/${telefone}?text=${texto}`;
+        window.open(url, '_blank');
+    }
+</script>
+
+</body>
+</html>
